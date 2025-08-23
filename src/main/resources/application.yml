@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: recruit
+  config:
+    import: classpath:jwt.properties
+
+springdoc:
+  swagger-ui:
+    enabled: true
+
