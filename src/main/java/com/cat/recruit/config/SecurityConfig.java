@@ -31,7 +31,10 @@ public class SecurityConfig{
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         // 登录注册等接口允许匿名访问
-                        .requestMatchers("api/login/**", "api/register/**").permitAll()
+                        .requestMatchers("api/wx/login/**", "api/wx/register/**").permitAll()
+                        .requestMatchers("api/admin/login/**", "api/admin/register/**").permitAll()
+                        .requestMatchers("/api/wx/**").hasRole("USER")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         // 其它请求需要认证
                         .anyRequest().authenticated()
                 )
