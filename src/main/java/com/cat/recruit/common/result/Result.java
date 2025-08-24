@@ -1,5 +1,6 @@
 package com.cat.recruit.common.result;
 
+import com.cat.recruit.common.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -30,10 +31,21 @@ public class Result {
     }
 
     /**
-     * 用于在error创建Result对象
+     * 用于在error时创建Result对象
+     * 不推荐使用，
      */
+    @Deprecated
     public static Result error(ResultEnum resultEnum) {
         return new Result(resultEnum.getCode(), resultEnum.getMessage(), null);
     }
+
+    /**
+     * 用于在error时创建Result对象
+     */
+    public static Result error(BusinessException e) {
+        return new Result(e.getCode(), e.getMessage(), null);
+    }
+
+
 
 }

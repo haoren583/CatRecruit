@@ -14,7 +14,7 @@ import lombok.Getter;
 public class BusinessException extends RuntimeException {
 
     // 错误码
-    private final String code;
+    private final Integer code;
     // 错误信息
     private final String message;
 

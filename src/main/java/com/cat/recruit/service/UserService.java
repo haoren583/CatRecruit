@@ -1,4 +1,4 @@
-package com.cat.recruit.service.impl;
+package com.cat.recruit.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 /**
  * @author cat
  */
-@Service
 public interface UserService {
     UserDetails loadUserByUserId(Integer userId);
 }
