@@ -2,6 +2,7 @@ package com.cat.recruit.common.exception;
 
 import com.cat.recruit.common.result.Result;
 import com.cat.recruit.common.result.ResultEnum;
+import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,4 +27,10 @@ public class ExceptionHandlerGlobal {
         return Result.error(ResultEnum.INTERNAL_SERVER_ERROR);
     }
 
+    // 处理jwt相关异常
+    @ExceptionHandler(JwtException.class)
+    public Result handleJwtException(JwtException e) {
+        log.error("JWT异常捕获", e);
+        return Result.error(ResultEnum.UNAUTHORIZED);
+    }
 }
