@@ -3,9 +3,13 @@ package com.cat.recruit.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
@@ -13,18 +17,32 @@ import java.util.Map;
 /**
  * @author cat
  */
+@Slf4j
+@Component
 public class JwtUtils {
 
-    // 密钥
+    // 配置文件的数据
     @Value("${jwt.secret}")
+    private String secretProperty;
+
+    @Value("${jwt.expiration}")
+    private Long expirationProperty;
+
     private static String secret;
 
-    // 过期时间
-    @Value("${jwt.expiration}")
     private static Long EXPIRATION_TIME;
 
-    // 将密钥转换为Key对象
-    private static final SecretKey KEY = Keys.hmacShaKeyFor(Base64.getDecoder().decode(secret));
+    private static SecretKey KEY;
+
+    @PostConstruct
+    public void init() {
+        secret = secretProperty;
+        EXPIRATION_TIME = expirationProperty;
+        log.info("JWT secret: {}", secret);
+        log.info("JWT expiration: {}", EXPIRATION_TIME);
+        log.info("JWT key: {}", Jwts.SIG.HS256.key());
+        KEY = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     /**
      * 生成JWT Token
