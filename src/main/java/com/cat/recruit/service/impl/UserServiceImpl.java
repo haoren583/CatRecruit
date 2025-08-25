@@ -26,27 +26,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result createUser(String openId) {
-        if (openId == null || openId.trim().isEmpty()) {
-            //TODO: 创建一个数据不应该为空的业务异常
-            return Result.error(BusinessException.bizException(BusinessExceptionEnum.BAD_REQUEST));
-        }
         User user = new User();
         user.setOpenId(openId);
         if (userMapper.insert(user) > 0) {
             return Result.success(user);
         }else {
-            //TODO: 创建一个插入用户失败的业务异常
-            return Result.error(BusinessException.bizException(BusinessExceptionEnum.INTERNAL_SERVER_ERROR));
+            return Result.error(BusinessException.bizException(BusinessExceptionEnum.INSERT_FAILED));
         }
     }
 
     @Override
     public int selectUserIsExist(String openId) {
         //返回0代表改用户不存在，返回1代表该用户已存在
-        if (openId == null || openId.trim().isEmpty()) {
-            //TODO: 创建一个数据不应该为空的业务异常 并抛出该业务异常
-            return 0;
-        }
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("open_id", openId);
         long count = userMapper.selectCount(queryWrapper);

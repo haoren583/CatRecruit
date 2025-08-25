@@ -13,6 +13,11 @@ public enum BusinessExceptionEnum {
     UNKNOWN(10000, "未知异常"),
     // 用户不存在
     USER_NOT_EXIST(10001, "用户不存在"),
+    // 数据不能为空
+    DATA_NOT_NULL(10002, "数据不能为空"),
+    // 插入数据失败（insert返回值为0）
+    INSERT_FAILED(10003, "插入数据失败"),
+
 
     SUCCESS(200, "成功"),
     BAD_REQUEST(400, "请求错误"),
