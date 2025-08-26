@@ -1,14 +1,16 @@
 package com.cat.recruit.service.impl;
 
-import com.cat.recruit.common.exception.BusinessException;
+import com.cat.recruit.bean.dto.UserDTO;
 import com.cat.recruit.common.exception.BusinessExceptionEnum;
 import com.cat.recruit.common.result.Result;
-import com.cat.recruit.entity.Admin;
-import com.cat.recruit.mapper.AdminMapper;
+import com.cat.recruit.entity.User;
+import com.cat.recruit.mapper.UserMapper;
 import com.cat.recruit.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static com.cat.recruit.common.exception.BusinessException.bizException;
@@ -22,40 +24,46 @@ import static com.cat.recruit.common.exception.BusinessException.bizException;
 public class AdminServiceImpl implements AdminService {
 
     @Autowired
-    AdminMapper adminMapper;
+    UserMapper userMapper;
 
-    /**
-     * 生成管理员token
-     * @param admin 管理员信息
-     * @return token
-     */
-    private String generateToken(Admin admin) {
-        //构建载体
-        // TODO: 构建载体
-        return null;
-    }
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    JwtUserDetailsServiceImpl jwtUserDetailsService;
+
 
     /**
      * 管理员登录
      *
-     * @param userName 用户名
+     * @param username 用户名
      * @param password 密码
      * @return 登录结果
      */
     @Override
-    public Result login(String userName, String password) {
+    public Result login(String username, String password) {
         // 在数据库中查询用户信息
-        Admin admin = adminMapper.selectByUserName(userName);
+        User user = userMapper.selectByUsername(username);
         // 判断用户是否存在
-        if (admin == null) {
+        if (user == null) {
             throw bizException(BusinessExceptionEnum.USER_NOT_EXIST);
         }
         // 判断密码是否正确
-        if (!admin.getPassword().equals(password)) {
+        if (!user.getPassword().equals(passwordEncoder.encode(password))) {
             throw bizException(BusinessExceptionEnum.PASSWORD_ERROR);
         }
         // 生成token
-        // TODO: 生成token
-        return null;
+        String token = jwtUserDetailsService.generateToken(user);
+
+        // 生成用户信息DTO
+        UserDTO userDTO = new UserDTO(user);
+
+        // 封装数据
+        Map<String, Object> data = new HashMap<>();
+        data.put("token", token);
+        data.put("user", userDTO);
+
+        return Result.success(userDTO);
+
     }
 }

@@ -1,22 +1,20 @@
-package com.cat.recruit.entity;
+package com.cat.recruit.bean.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.cat.recruit.entity.User;
+import lombok.Builder;
 import lombok.Data;
 
 /**
- *
- * &#064;TableName  users
+ * 用于向query方法传递参数的DTO对象
  */
-@TableName(value ="users")
 @Data
-public class User {
+@Builder
+public class UserDTO {
     /**
-     * 主键自增
+     * 主键
      */
-    @TableId(type = IdType.AUTO)
     private Integer userId;
 
     /**
@@ -75,12 +73,24 @@ public class User {
     private String role;
 
     /**
-     * 密码（管理员专用）
-     */
-    private String password;
-
-    /**
      * 用户名（管理员专用）
      */
     private String username;
+
+    public UserDTO(User user) {
+        this.userId = user.getUserId();
+        this.openId = user.getOpenId();
+        this.code = user.getCode();
+        this.name = user.getName();
+        this.userNumber = user.getUserNumber();
+        this.academy = user.getAcademy();
+        this.phoneNumber = user.getPhoneNumber();
+        this.email = user.getEmail();
+        this.userIntro = user.getUserIntro();
+        this.direction = user.getDirection();
+        this.state = user.getState();
+        this.role = user.getRole();
+        this.username = user.getUsername();
+    }
+
 }
