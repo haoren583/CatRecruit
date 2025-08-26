@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
  * @author cat
  */
 public interface UserService {
-    UserDetails loadUserByUserId(Integer userId);
+    UserDetails Login(String userNumber,String password);
 }
