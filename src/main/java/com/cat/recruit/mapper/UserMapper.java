@@ -7,5 +7,6 @@ import com.cat.recruit.entity.User;
  * @author cat
  */
 public interface UserMapper extends BaseMapper<User> {
+    User selectByUsername(String username);
     // TODO : Implement UserMapper
 }

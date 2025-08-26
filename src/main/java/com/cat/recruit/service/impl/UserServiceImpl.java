@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
     @Override
-    public UserDetails loadUserByUserId(Integer userId) {
-        // TODO: implement load user by user id
+    public UserDetails Login(String userNumber, String password) {
+        // TODO: 实现登录逻辑
         return null;
     }
 }

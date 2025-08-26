@@ -1,6 +1,6 @@
 package com.cat.recruit.controller;
 
-import com.cat.recruit.bean.pojo.AdminLoginRequest;
+import com.cat.recruit.bean.request.AdminLoginRequest;
 import com.cat.recruit.common.result.Result;
 import com.cat.recruit.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
